@@ -7,4 +7,7 @@ and returns the floor of the float.
 import math
 
 def floor(n: float) -> int:
+    """
+    returns the floor of the float which is the smallest whole number.
+    """
     return math.floor(n)
