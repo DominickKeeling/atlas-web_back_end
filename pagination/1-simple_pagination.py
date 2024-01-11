@@ -23,14 +23,6 @@ import math
 from typing import Tuple, List
 
 
-
-def index_range(page: int , page_size: int) -> Tuple[int, int]:
-    """return  a tuple of size two containing a start and end index """
-    start_index = (page - 1) * page_size
-    end_index = page * page_size
-    return start_index, end_index
-
-
 class Server:
     """Server class to paginate a database of popular baby names.
     """
@@ -67,3 +59,10 @@ class Server:
             return []
 
         return data[start_index:end_index]
+
+
+    def index_range(page: int, page_size: int) -> Tuple[int, int]:
+        """return  a tuple of size two containing a start and end index """
+        start_index = (page - 1) * page_size
+        end_index = page * page_size
+        return start_index, end_index
