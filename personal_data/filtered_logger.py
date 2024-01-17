@@ -18,7 +18,7 @@ def filter_datum(fields: List[str], redaction: str, message: str,
     """ returns log message """
     for field in fields:
         message = re.sub(f'{field}=.*?{separator}',
-                        f'{field}={redaction}{separator}', message)
+                         f'{field}={redaction}{separator}', message)
     return message
 
 
@@ -61,9 +61,9 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     db_host = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
     db_name = os.getenv('PERSONAL_DATA_DB_NAME')
     return mysql.connector.connect(user=db_user,
-                                password=db_password,
-                                host=db_host,
-                                database=db_name)
+                                   password=db_password,
+                                   host=db_host,
+                                   database=db_name)
 
 
 def main():
