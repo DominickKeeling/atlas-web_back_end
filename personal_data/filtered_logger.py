@@ -13,7 +13,7 @@ PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
 
 
 def filter_datum(fields: List[str], redaction: str, message: str,
-                 separator: str) -> str:
+                separator: str) -> str:
     """ returns log message """
     for field in fields:
         message = re.sub(f'{field}=.*?{separator}',
@@ -50,7 +50,7 @@ def get_logger() -> logging.Logger:
     return logger
 
 
-def get_db() -> mysql.connector.connections.MySQLConnection:
+def get_db() -> mysql.connector.connection.MySQLConnection:
     """ fetch datanase credentials from env variables with default vals """
     db_user = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
     db_password = os.getenv('PERSONAL_DATA_DB_PASSWORD', '')
