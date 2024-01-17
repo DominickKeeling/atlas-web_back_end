@@ -7,12 +7,14 @@ Use the bcrypt package to perform the hashing (with hashpw)
 
 import bcrypt
 
+
 def hash_password(password: str) -> bytes:
     """ returns a salted hashed password """
     salt = bcrypt.gensalt()
     hashd_password = bcrypt.hashpw(password.encode('utf-8'), salt)
 
     return hashd_password
+
 
 def is_valid(hashed_password: bytes, password: str) -> bool:
     """Checks for valid password"""
