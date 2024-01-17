@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
-""" Write a function called filter_datum that returns the log message obfuscated """
+""" Write a function called filter_datum that returns the log message
+obfuscated """
 
 import re
 import logging
@@ -13,11 +14,11 @@ PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
 
 
 def filter_datum(fields: List[str], redaction: str, message: str,
-                separator: str) -> str:
+                    separator: str) -> str:
     """ returns log message """
     for field in fields:
         message = re.sub(f'{field}=.*?{separator}',
-                        f'{field}={redaction}{separator}', message)
+                            f'{field}={redaction}{separator}', message)
     return message
 
 
@@ -35,7 +36,9 @@ class RedactingFormatter(logging.Formatter):
     def format(self, record: logging.LogRecord) -> str:
         """ method to filter values in incoming log records """
         original_formatted_message = super().format(record)
-        return filter_datum(self.fields, self.REDACTION, original_formatted_message, self.SEPARATOR)
+        return filter_datum(self.fields, self.REDACTION, original_formatted_message,
+                                self.SEPARATOR)
+
 
 def get_logger() -> logging.Logger:
     """ Takes no arguments and returns a logging.Logger object """
@@ -55,11 +58,11 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
     db_user = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
     db_password = os.getenv('PERSONAL_DATA_DB_PASSWORD', '')
     db_host = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
-    db_name = os.getenv('PERSONAL_DATA_DB_NAME') 
+    db_name = os.getenv('PERSONAL_DATA_DB_NAME')
     return mysql.connector.connect(user=db_user,
-                                password=db_password,
-                                host=db_host,
-                                database=db_name)
+                                    password=db_password,
+                                    host=db_host,
+                                    database=db_name)
 
 
 def main():
