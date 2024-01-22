@@ -8,7 +8,7 @@ from models.user import User
 from os import getenv
 
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
-def login_session():
+def login():
     """ handles all routes for the session authentication """
 
     email = request.form.get('email')
@@ -36,7 +36,7 @@ def login_session():
 
     return response
 
-@app_views.route('/api/v1/auth_session/logout', methods=['DELETE'],
+@app_views.route('/auth_session/logout', methods=['DELETE'],
                  strict_slashes=False)
 def logout():
     """ create logout method with delete method """
