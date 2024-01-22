@@ -27,12 +27,12 @@ if os.getenv("AUTH_TYPE") == "basic_auth":
 elif os.getenv("AUTH_TYPE") == "auth":
     from api.v1.auth.auth import Auth
     auth = Auth()
-    
-    
+
+
 @app.before_request
 def before_request() -> str:
     """ handler before request """
-    
+
     if auth is None:
         return
 
@@ -49,9 +49,11 @@ def before_request() -> str:
         if auth.current_user(request) is None:
             abort(403)
 
-    if auth.authorization_header(request) is None and auth.session_cookie(request) is None:
+    if auth.authorization_header(request) is None:
         abort(401)
 
+    if auth.session_cookie(request) is None:
+        abort(401)
 
 @app.errorhandler(401)
 def unauthorized(error) -> str:

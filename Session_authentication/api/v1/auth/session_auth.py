@@ -7,7 +7,7 @@ from models.user import User
 from api.v1.auth.auth import Auth
 
 
-class SessionAuth:
+class SessionAuth(Auth):
     """ Class for user sessions """
     user_id_by_session_id = {}
 
