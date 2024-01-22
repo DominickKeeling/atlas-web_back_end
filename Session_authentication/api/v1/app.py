@@ -55,6 +55,7 @@ def before_request() -> str:
     if auth.session_cookie(request) is None:
         abort(401)
 
+
 @app.errorhandler(401)
 def unauthorized(error) -> str:
     """ unauthorized handler """
