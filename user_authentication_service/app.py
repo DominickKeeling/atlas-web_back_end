@@ -5,6 +5,8 @@
 from flask import Flask, jsonify, request, make_response, abort
 from flask import redirect, url_for
 from auth import Auth
+from sqlalchemy.orm.exc
+from sqlalchemy.exc
 
 app = Flask(__name__)
 AUTH = Auth()
