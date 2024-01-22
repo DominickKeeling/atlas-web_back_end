@@ -7,6 +7,7 @@ from api.v1.views import app_views
 from models.user import User
 from os import getenv
 
+
 @app_views.route('/auth_session/login', methods=['POST'], strict_slashes=False)
 def login():
     """ handles all routes for the session authentication """
@@ -14,7 +15,7 @@ def login():
     email = request.form.get('email')
     password = request.form.get('password')
     users = User.search({'email': email})
-    
+
     if not email:
         return jsonify({"error": "email missing"}), 400
 
