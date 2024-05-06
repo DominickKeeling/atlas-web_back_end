@@ -14,7 +14,7 @@ from typing import AsyncGenerator
 
 async def async_generator() -> AsyncGenerator[float, None]:
     """
-    yeilds random number between 0 and 10
+    yeilds random number between 0 and 10.
     """
     for _ in range(10):
         await asyncio.sleep(1)
