@@ -18,7 +18,7 @@ from typing import List
 
 async def wait_n(n: int, max_delay: int) -> List[float]:
     """
-    Returns list of delays
+    Returns list of delays delays
     """
     opperations = [wait_random(max_delay) for _ in range(n)]
     results = await asyncio.gather(*opperations)
