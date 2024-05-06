@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
-Write a typed-annotated function add that takes a float a and returns a float a
+Write a typed-annotated a function add that takes a float a and returns a float a
 and a float b as arguments and returns their sum as a float.
 """
 
