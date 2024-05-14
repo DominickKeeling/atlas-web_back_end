@@ -8,6 +8,6 @@ and a float b as arguments and returns their sum as a float.
 
 def add(a: float, b: float) -> float:
     """
-    sums up two floats and returns a float
+    sums up two floats and returns a floats
     """
     return a + b
