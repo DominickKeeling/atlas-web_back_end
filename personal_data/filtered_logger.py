@@ -19,10 +19,35 @@ import logging
 from typing import List
 
 
-def filter_datum(fields: List[str], redaction: str, message: str,
-                 separator: str) -> str:
+class RedactingFormatter(logging.Formatter):
+    """ Redacting Formatter class
+        """
+
+    REDACTION = "***"
+    FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
+    SEPARATOR = ";"
+
+    def __init__(self, fields: list):
+        super(RedactingFormatter, self).__init__(self.FORMAT)
+        self.fields = fields
+
     """
-    returns obfuscated message
+    Update the class to accept a list of strings fields constructor argument.
+    Implement the format method to filter values in incoming log records using
+    filter_datum. Values for fields in fields should be filtered.
+    DO NOT extrapolate FORMAT manually. The format method should be less than
+    5 lines long.
     """
-    looking_for = f"({'|'.join(fields)})=[^{separator}]*"
-    return re.sub(looking_for, lambda m: f"{m.group(1)}={redaction}", message)
+
+    def format(self, record: logging.LogRecord) -> str:
+        for field in self.fields:
+            record.msg = record.msg.replace(field + self.SEPARATOR, field + self.SEPARATOR + self.filter_datum(getattr(record, field)))
+        return super().format(record)
+
+    def filter_datum(fields: List[str], redaction: str, message: str,
+                    separator: str) -> str:
+        """
+        returns obfuscated message
+        """
+        looking_for = f"({'|'.join(fields)})=[^{separator}]*"
+        return re.sub(looking_for, lambda m: f"{m.group(1)}={redaction}", message)
