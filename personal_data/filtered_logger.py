@@ -58,7 +58,7 @@ class RedactingFormatter(logging.Formatter):
                             original_formatted_message,
                             self.SEPARATOR)
 
-def get_logger():
+def get_logger() -> logging.Logger:
     """ retunds a logger object """
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
