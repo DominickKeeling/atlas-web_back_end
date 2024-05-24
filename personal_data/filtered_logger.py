@@ -14,6 +14,8 @@ filter_datum should be less than 5 lines long and use re.sub to perform the
 substitution with a single regex.
 """
 
+import mysql.connector
+import os
 import re
 import logging
 from typing import List
@@ -27,8 +29,10 @@ def filter_datum(fields: List[str], redaction: str, message: str,
     """
     returns obfuscated message
     """
-    looking_for = f"({'|'.join(fields)})=[^{separator}]*"
-    return re.sub(looking_for, lambda m: f"{m.group(1)}={redaction}", message)
+    looking_for = r"(?P<field>[^;]+);(?P<value>.*)"
+    replacement = lambda m: f"{m.group('field')}={redaction}"
+
+    return re.sub(looking_for, replacement, message)
 
 
 class RedactingFormatter(logging.Formatter):
@@ -70,3 +74,20 @@ def get_logger() -> logging.Logger:
     logger.addHandler(stream_handler)
 
     return logger
+
+
+def get_db() -> mysql.connector.connections.MySQLConnection:
+    """ fetch database credentials from env variables using default values"""
+    db_username = os.getenv('PERSONAL_DATA_DB_USERNAME', 'root')
+    db_password = os.getenv('PERSONAL_DATA_DB_PASSWORD', '')
+    db_host = os.getenv('PERSONAL_DATA_DB_HOST', 'localhost')
+    db_name = os.getenv('PERSONAL_DATA_DB_NAME')
+
+    connection = mysql.connector.connect(
+        user=db_username,
+        password=db_password,
+        host=db_host,
+        database=db_name
+    )
+
+    return connection
