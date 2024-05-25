@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 """
-Create a class FIFOCache that inherits from BaseCaching and is a caching system:
+Create a class FIFOCache that inherits from BaseCaching and is a caching
+system:
 
 You must use self.cache_data - dictionary from the parent class BaseCaching
 You can overload def __init__(self): but don’t forget to call the parent init:
@@ -22,7 +23,7 @@ BaseCaching = __import__('base_caching').BaseCaching
 
 class FIFOCache(BaseCaching):
     """
-    
+    fifo caching system
     """
     def __init__(self):
         """
@@ -30,7 +31,7 @@ class FIFOCache(BaseCaching):
         """
         super().__init__()
         self.order = []
-        
+
     def put(self, key, item):
         """
         adds an item to the cache
