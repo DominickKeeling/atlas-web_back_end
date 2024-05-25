@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 
-""" Basic Authorization """
+""" Basic Auth stuff """
 
 from api.v1.auth.auth import Auth
 from flask import request
-from typing import List, TypeVar, Tuple
+from typing import List, TypeVar
 import base64
 from models.user import User
 
@@ -30,7 +30,7 @@ class BasicAuth(Auth):
     def decode_base64_authorization_header(self,
                                            base64_authorization_header:
                                            str) -> str:
-        """ decode base64 auth header """
+        """ decode base64 authorization header """
         if base64_authorization_header is None:
             return None
         if type(base64_authorization_header) is not str:
@@ -45,7 +45,7 @@ class BasicAuth(Auth):
 
     def extract_user_credentials(self,
                                  decoded_base64_authorization_header: str
-                                 ) -> Tuple[str, str]:
+                                 ) -> (str, str):
         """ extract_user_credentials """
         if decoded_base64_authorization_header is None:
             return None, None
@@ -57,29 +57,21 @@ class BasicAuth(Auth):
 
     def user_object_from_credentials(self, user_email: str,
                                      user_pwd: str) -> TypeVar('User'):
-        """ user object from credentials """
+        """user_object_from_credentials method"""
         if user_email is None or type(user_email) is not str:
             return None
         if user_pwd is None or type(user_pwd) is not str:
             return None
         try:
-            if User.search({'email': user_email}) == []:
-                return None
+            users = User.search({'email': user_email})
         except Exception:
             return None
+        for user in users:
+            if user.is_valid_password(user_pwd):
+                return user
+        return None
 
-        try:
-            """ Return None if user_pwd is not the password of the User
-                instance found - you must use the method is_valid_password
-                of User """
-            if User.search({'email': user_email})[0].is_valid_password(
-              user_pwd) is False:
-                return None
-        except Exception:
-            return None
-        """ Return the User instance otherwise """
-        return User.search({'email': user_email})[0]
-    def current_user(self, request=None) -> User:
+    def current_user(self, request=None) -> TypeVar('User'):
         """
         Retrieves the User instance for a request using Basic Authentication.
         """
