@@ -34,15 +34,26 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self, email: str, hashed_password: str) -> User:
-        """ method saves the user to the database """
-        new_user = User(email=email, hashed_password=hashed_password)
+    def add_user(self,
+                email: str,
+                hashed_password: str
+                ) -> User:
+        '''Adds user to db and returns
+            user object'''
+        user = User()
+        user.email = email
+        user.hashed_password = hashed_password
+        self.total_users += 1
+        user.id = self.total_users
+        user.session_id = str(self.total_users)
+        user.reset_token = 'reset'
 
-        self._session.add(new_user)
-        self._session.commit()
+        session = self._session
+        session.add(user)
+        session.commit()
 
-        return new_user
-
+        return user
+    
     def find_user_by(self, **kwargs) -> User:
         """Find and return the user matching the provided keyword args"""
         user_class = User
