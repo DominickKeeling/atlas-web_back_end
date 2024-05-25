@@ -35,7 +35,7 @@ class MRUCache(BaseCaching):
 
         if len(self.cache_data) >= self.MAX_ITEMS:
             mru_key = next(reversed(self.cache_data))
-            print(f"DISCARD: {mru_key}\n")
+            print(f"DISCARD: {mru_key}")
             del self.cache_data[mru_key]
         self.cache_data[key] = item
 
