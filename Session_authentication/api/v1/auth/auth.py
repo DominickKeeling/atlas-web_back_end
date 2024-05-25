@@ -2,9 +2,9 @@
 
 """ Create a class to manage the API auth """
 
+import os
 from flask import request
 from typing import List, TypeVar
-import os
 
 
 class Auth():
@@ -15,7 +15,7 @@ class Auth():
         pass
 
     def require_auth(self, path: str, excluded_paths: List[str]) -> bool:
-        """ require auth """
+        """ require authorization """
         if path is None or excluded_paths is None or excluded_paths == []:
             return True
         if path[-1] != '/':

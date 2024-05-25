@@ -4,7 +4,7 @@
 
 from api.v1.auth.auth import Auth
 from flask import request
-from typing import List, TypeVar
+from typing import List, TypeVar, Tuple
 import base64
 from models.user import User
 
@@ -45,7 +45,7 @@ class BasicAuth(Auth):
 
     def extract_user_credentials(self,
                                  decoded_base64_authorization_header: str
-                                 ) -> (str, str):
+                                 ) -> Tuple[str, str]:
         """ extract_user_credentials """
         if decoded_base64_authorization_header is None:
             return None, None
@@ -53,10 +53,11 @@ class BasicAuth(Auth):
             return None, None
         if ":" not in decoded_base64_authorization_header:
             return None, None
-        return tuple(decoded_base64_authorization_header.split(':', 1))
+        user_credentials = decoded_base64_authorization_header.split(':', 1)
+        return user_credentials[0], user_credentials[1]
 
     def user_object_from_credentials(self, user_email: str,
-                                     user_pwd: str) -> TypeVar('User'):
+                                     user_pwd: str) -> User:
         """user_object_from_credentials method"""
         if user_email is None or type(user_email) is not str:
             return None
@@ -71,19 +72,26 @@ class BasicAuth(Auth):
                 return user
         return None
 
-    def current_user(self, request=None) -> TypeVar('User'):
+    def current_user(self, request=None) -> User:
         """
         Retrieves the User instance for a request using Basic Authentication.
         """
+        if request is None:
+            return None
+
         authorization_header = self.authorization_header(request)
         if authorization_header is None:
             return None
 
-        base64_credentials = self.extract_base64_authorization_header(authorization_header)
+        base64_credentials = self.extract_base64_authorization_header(
+            authorization_header
+        )
         if base64_credentials is None:
             return None
 
-        decoded_credentials = self.decode_base64_authorization_header(base64_credentials)
+        decoded_credentials = self.decode_base64_authorization_header(
+            base64_credentials
+        )
         if decoded_credentials is None:
             return None
 
@@ -91,5 +99,5 @@ class BasicAuth(Auth):
         if user_credentials is None:
             return None
 
-        user_email, user_pwd = user_credentials
-        return self.user_object_from_credentials(user_email, user_pwd)
+        user = self.user_object_from_credentials(user_credentials)
+        return user
