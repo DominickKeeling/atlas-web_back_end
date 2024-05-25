@@ -41,7 +41,7 @@ class LIFOCache(BaseCaching):
         if len(self.cache_data) > self.MAX_ITEMS:
             latest_key = self.order.pop(3)
             del self.cache_data[latest_key]
-            print(f"DISCARD: {latest_key}\n")
+            print(f"DISCARD: {latest_key}")
 
     def get(self, key):
         """
