@@ -34,11 +34,8 @@ class DB:
             self.__session = DBSession()
         return self.__session
 
-    def add_user(self,
-                 email: str,
-                 hashed_password: str
-                ) -> User:
-        '''Adds user to db and returns user object'''
+    def add_user(self, email: str, hashed_password: str) -> User:
+        """ method saves the user to the database """
         user = User()
         user.email = email
         user.hashed_password = hashed_password
@@ -52,7 +49,7 @@ class DB:
         session.commit()
 
         return user
-
+    
     def find_user_by(self, **kwargs) -> User:
         """Find and return the user matching the provided keyword args"""
         user_class = User
