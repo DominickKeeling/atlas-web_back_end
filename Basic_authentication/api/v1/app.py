@@ -27,8 +27,8 @@ if os.getenv("AUTH_TYPE") == "basic_auth":
 elif os.getenv("AUTH_TYPE") == "auth":
     from api.v1.auth.auth import Auth
     auth = Auth()
-    
-    
+
+
 @app.before_request
 def before_request() -> str:
     """ handler before request """
