@@ -25,7 +25,7 @@ class MRUCache(BaseCaching):
     MRU caching system
     """
     def __init__(self):
-        """ initializing """
+        """ initializing the class """
         super().__init__()
 
     def put(self, key, item):
