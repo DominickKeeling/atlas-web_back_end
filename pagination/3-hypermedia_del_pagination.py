@@ -56,7 +56,7 @@ class Server:
                 next_index += 1
             data.append(dataset[next_index])
             next_index += 1
-  
+
         return {
             "index": index,
             "next_index": next_index,
