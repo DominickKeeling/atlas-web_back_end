@@ -28,7 +28,6 @@ class LIFOCache(BaseCaching):
         """ initializing"""
         super().__init__()
         self.order = []
-        self.insertion_order = []
 
     def put(self, key, item):
         """ appending iem to the cache data """
@@ -37,7 +36,6 @@ class LIFOCache(BaseCaching):
         if key in self.cache_data:
             self.order.remove(key)
         self.order.append(key)
-        self.insertion_order.apped(key)
         self.cache_data[key] = item
 
         if len(self.cache_data) > self.MAX_ITEMS:
