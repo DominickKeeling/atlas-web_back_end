@@ -16,6 +16,7 @@ from user import Base, User
 class DB:
     """DB class
     """
+    total_users = 0
 
     def __init__(self) -> None:
         """Initialize a new DB instance
@@ -49,7 +50,7 @@ class DB:
         session.commit()
 
         return user
-    
+
     def find_user_by(self, **kwargs) -> User:
         """Find and return the user matching the provided keyword args"""
         user_class = User
