@@ -32,6 +32,10 @@ class MRUCache(BaseCaching):
         """ appending item to cache data """
         if key is None or item is None:
             return
+        if key in self.cache_data:
+            self.access_order.remove(key)
+        self.access_order.append(key)
+        self.cache_data[key] = item
 
         if len(self.cache_data) >= self.MAX_ITEMS:
             mru_key = next(reversed(self.cache_data))
