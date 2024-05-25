@@ -19,14 +19,14 @@ def hello() -> str:
 
 
 @app.route('/users', methods=['POST'], strict_slashes=False)
-def register_user():
+def user():
     """ Method that posts a new user """
     email = request.form.get('email')
     password = request.form.get('password')
     try:
         AUTH.register_user(email, password)
         return jsonify({
-            "email": new_user.email,
+            "email": email,
             "message": "user created"
         })
     except ValueError:
