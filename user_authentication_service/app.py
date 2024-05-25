@@ -5,20 +5,17 @@
 from flask import Flask, jsonify, request, make_response, abort
 from flask import redirect, url_for
 from auth import Auth
-from sqlalchemy.orm.exc
-from sqlalchemy.exc
+from sqlalchemy.orm.exc import NoResultsFound
+from sqlalchemy.exc import InvalidRequestError
 
 app = Flask(__name__)
 AUTH = Auth()
 
 
-@app.route('/', methods=['GET'])
-def home() -> str:
-    """ Method that returns a message to route """
-    response = {
-        'message': 'Bienvenue'
-    }
-    return jsonify(response), 200
+@app.route('/', methods=['GET'], strict_slashes=False)
+def hello() -> str:
+    """ get Method that returns a message to route """
+    return jsonify({"message": "Bienvenue"})
 
 
 @app.route('/users', methods=['POST'])
