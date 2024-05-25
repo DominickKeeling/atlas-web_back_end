@@ -37,12 +37,12 @@ class Auth:
         '''Returns user object after creating
         user'''
         try:
-            user = self._db.find_user_by(email=email)
-            if user:
+            already_exist = self._db.find_user_by(email=email)
+            if already_exist:
                 raise ValueError('User {} already exists'.format(email))
 
         except NoResultFound:
-            hashed_password = self._hash_password(password)
+            hashed_password = _hash_password(password)
             user = self._db.add_user(email, hashed_password)
             return user
 
