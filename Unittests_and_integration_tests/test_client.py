@@ -93,6 +93,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         cls.get_patcher.stop()
 
     def test_public_repos(self):
+        """ method to test repos """
         github_org_client = GithubOrgClient("test_org")
         repos = github_org_client.public_repos()
         self.assertEqual(repos, self.expected_repos)
