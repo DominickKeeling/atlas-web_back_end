@@ -7,7 +7,7 @@ Create a store method that takes a data argument and returns a string. The metho
 
 Type-annotate store correctly. Remember that data can be a str, bytes, int or float.
 """
-
+import functools
 import redis
 import uuid
 from typing import Union, Callable, Optional
@@ -17,6 +17,7 @@ def count_calls(method: Callable) -> Callable:
     """
     count the methods called in the class
     """
+    @functools.wraps(method)
     def wrapper(self, *args, **kwargs):
         """
         intercepts calls to the original method and adds counting functionality
