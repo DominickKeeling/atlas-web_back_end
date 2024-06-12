@@ -22,7 +22,7 @@ def count_calls(method: Callable) -> Callable:
         intercepts calls to the original method and adds counting functionality
         """
         key = method.__qualname__
-        self.redis.incr(key)
+        self._redis.incr(key)
         return method(self, *args, **kwargs)
     return wrapper
 
