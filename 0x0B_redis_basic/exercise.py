@@ -28,6 +28,44 @@ def count_calls(method: Callable) -> Callable:
     return wrapper
 
 
+def call_history(method: Callable) -> Callable:
+    """
+    stores the history of the inputs and the outputs for each function call
+    """
+    def wrapper(self, *args, **kwargs)
+        """
+        intercepts calls to original method and adds history log functionality
+        """
+        input_key = method.__qualname__ + ":inputs"
+        output_key = method.__qualname__ + ":outputs"
+        
+        self._redis.rpush(input_key, *[str(args) for arg in args])
+        result = method(self, *args, **kwargs)
+        self._redis.rpush(output_key, str(result))
+
+        return result
+    return wrapper
+
+
+def replay(func):
+    """
+    function that displays the history of calls of a particular function
+    """
+    function_name = func.__qualname__
+    input_key = function_name + ":inputs"
+    output_key = function_name + ":outputs"
+
+    inputs = redis_client.lrange(input_key, 0, -1)
+    outputs = redis_client.lrange(outputs, 0, -1)
+    print(f"{function_name} was called {len(inputs)} times:")
+
+    for input_data, output_data in zip(inputs, outputs)
+        input_data = input_data.decode("utf-8") if isinstance(input_data, bytes) else input_data
+        output_data = output_data.decode("utf-8") if isinstance(output_data, bytes) else output_data
+
+    print(f"{fuction_name}(*({input_data},)) -> {output_data}")
+
+
 class Cache():
     """
     this is the cache class
@@ -40,6 +78,7 @@ class Cache():
         self._redis.flushdb()
 
     @count_calls
+    @call_history
     def store(self, data: Union[str, bytes, int, float]) -> str:
         """
         defining the store method
