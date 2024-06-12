@@ -32,6 +32,7 @@ def call_history(method: Callable) -> Callable:
     """
     stores the history of the inputs and the outputs for each function call
     """
+    @functools.wraps(method)
     def wrapper(self, *args, **kwargs)
         """
         intercepts calls to original method and adds history log functionality
