@@ -17,6 +17,6 @@ const Utils = {
             throw new Error('Invalid operation');
         }
     }
-}
+};
 
 module.exports = Utils;
