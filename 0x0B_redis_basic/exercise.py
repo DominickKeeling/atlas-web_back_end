@@ -23,6 +23,8 @@ class Cache:
     if fn is not None:
       return fn(data)
     
+    return data
+    
   def get_str(self, key: str) -> str:
     return self.get(key, fn=lambda d: d.decode("utf-8"))
 
