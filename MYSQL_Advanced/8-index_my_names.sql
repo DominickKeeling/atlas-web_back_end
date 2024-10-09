@@ -1,0 +1,2 @@
+-- CREATES AN INDEX ON THE FIRST LETTER IN NAME COLUMN
+CREATE INDEX idx_name_first ON names (name(1));
