@@ -1,2 +1,2 @@
 // Uses or creates db
-use my_db
+use my_db;
