@@ -1,0 +1,4 @@
+// Writes a script that inserts a doc int the collection school
+// doc must have one attrubute name with value "Holberton school"
+// the database name willbeb passed as option of mongo command
+db.school.insert({ name: "Holberton school" })
