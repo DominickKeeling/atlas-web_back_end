@@ -70,19 +70,19 @@ def replay(method: callable):
   """ replays the call history of a method """
   redis_instance = method.__self__._redis
   
-  method = method.__qualname__
+  method_name = method.__qualname__
   
-  input_key = method.__qualname__ + ":inputs"
-  output_key = method.__qualname__ + ":outputs"
+  input_key = method_name.__qualname__ + ":inputs"
+  output_key = method_name.__qualname__ + ":outputs"
   
   inputs = redis_instance.lrange(input_key, 0, -1)
   outputs = redis_instance.lrange(output_key, 0, -1)
   
   call_count = len(inputs)
   
-  print(f"{method} was called {call_count} times:")
+  print(f"{method_name} was called {call_count} times:")
   
   for input_args, output in zip(inputs, outputs):
     decoded_input = input_args.decode('utf-8')
     decoded_output = output.decode('utf-8')
-    print(f"{method}(*{decoded_input}) -> {decoded_output}")
+    print(f"{method_name}(*{decoded_input}) -> {decoded_output}")
