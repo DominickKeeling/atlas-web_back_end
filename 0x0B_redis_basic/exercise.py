@@ -72,8 +72,8 @@ def replay(method: callable):
   
   method_name = method.__qualname__
   
-  input_key = method_name.__qualname__ + ":inputs"
-  output_key = method_name.__qualname__ + ":outputs"
+  input_key = f"{method_name}:inputs"
+  output_key = f"{method_name}:outputs"
   
   inputs = redis_instance.lrange(input_key, 0, -1)
   outputs = redis_instance.lrange(output_key, 0, -1)
