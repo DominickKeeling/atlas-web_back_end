@@ -69,6 +69,7 @@ class Cache:
 def replay(method: callable):
   """ replays the call history of a method """
   redis_instance = method.__self__._redis
+  
   method = method.__qualname__
   
   input_key = method.__qualname__ + ":inputs"
@@ -79,9 +80,9 @@ def replay(method: callable):
   
   call_count = len(inputs)
   
-  print(f"{method_name} was called {call_count} times:")
+  print(f"{method} was called {call_count} times:")
   
   for input_args, output in zip(inputs, outputs):
     decoded_input = input_args.decode('utf-8')
     decoded_output = output.decode('utf-8')
-    print(f"{method_name}(*{decoded_input}) -> {decoded_output}")
+    print(f"{method}(*{decoded_input}) -> {decoded_output}")
